@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    input[type="checkbox"], input[type="radio"] {
+      transform: scale(1.2);
+    }
+    .correct-answer {
+      color: #22c55e; /* green-500 */
+    }
+    .wrong-answer {
+      color: #ef4444; /* red-500 */
+    }
+  </style>
+</head>
+<body class="bg-[#1E1E2F] text-white font-sans p-10">
+
+  <div class="max-w-4xl mx-auto">
+    <!-- Task Title -->
+    <div class="border-2 border-red-600 w-fit px-4 py-2 mb-6">
+      <h2 class="text-xl font-bold uppercase tracking-wider">Quiz Application</h2>
+    </div>
+
+    <!-- Quiz Game Heading -->
+    <h1 class="text-4xl font-bold tracking-wide mb-6">QUIZ GAME APPLICATION</h1>
+
+    <!-- Quiz Container -->
+    <form id="quizForm" class="space-y-8">
+
+      <!-- Question 1 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">1. What is the capital of India?</p>
+        <label><input type="radio" name="q1" value="Delhi" class="mr-2">Delhi</label><br>
+        <label><input type="radio" name="q1" value="Mumbai" class="mr-2">Mumbai</label><br>
+        <label><input type="radio" name="q1" value="Kolkata" class="mr-2">Kolkata</label>
+      </div>
+
+      <!-- Question 2 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">2. Which are programming languages?</p>
+        <label><input type="checkbox" name="q2" value="Python" class="mr-2">Python</label><br>
+        <label><input type="checkbox" name="q2" value="HTML" class="mr-2">HTML</label><br>
+        <label><input type="checkbox" name="q2" value="Java" class="mr-2">Java</label><br>
+        <label><input type="checkbox" name="q2" value="CSS" class="mr-2">CSS</label>
+      </div>
+
+      <!-- Question 3 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">3. The currency of the USA is _____.</p>
+        <input type="text" name="q3" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+      </div>
+
+      <!-- Question 4 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">4. HTML stands for?</p>
+        <label><input type="radio" name="q4" value="Hyper Text Markup Language" class="mr-2">Hyper Text Markup Language</label><br>
+        <label><input type="radio" name="q4" value="High Text Machine Language" class="mr-2">High Text Machine Language</label><br>
+        <label><input type="radio" name="q4" value="Hyperlink Text Markup Language" class="mr-2">Hyperlink Text Markup Language</label>
+      </div>
+
+      <!-- Question 5 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">5. Select all frontend frameworks:</p>
+        <label><input type="checkbox" name="q5" value="React" class="mr-2">React</label><br>
+        <label><input type="checkbox" name="q5" value="Angular" class="mr-2">Angular</label><br>
+        <label><input type="checkbox" name="q5" value="Node.js" class="mr-2">Node.js</label><br>
+        <label><input type="checkbox" name="q5" value="Vue" class="mr-2">Vue</label>
+      </div>
+
+      <!-- Question 6 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">6. JavaScript is used for?</p>
+        <label><input type="radio" name="q6" value="Styling" class="mr-2">Styling</label><br>
+        <label><input type="radio" name="q6" value="Structure" class="mr-2">Structure</label><br>
+        <label><input type="radio" name="q6" value="Interactivity" class="mr-2">Interactivity</label>
+      </div>
+
+      <!-- Question 7 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">7. CSS stands for _____.</p>
+        <input type="text" name="q7" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+      </div>
+
+      <!-- Question 8 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">8. Select all NoSQL databases:</p>
+        <label><input type="checkbox" name="q8" value="MongoDB" class="mr-2">MongoDB</label><br>
+        <label><input type="checkbox" name="q8" value="MySQL" class="mr-2">MySQL</label><br>
+        <label><input type="checkbox" name="q8" value="Cassandra" class="mr-2">Cassandra</label><br>
+        <label><input type="checkbox" name="q8" value="PostgreSQL" class="mr-2">PostgreSQL</label>
+      </div>
+
+      <!-- Question 9 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">9. Which is a backend language?</p>
+        <label><input type="radio" name="q9" value="Python" class="mr-2">Python</label><br>
+        <label><input type="radio" name="q9" value="HTML" class="mr-2">HTML</label><br>
+        <label><input type="radio" name="q9" value="CSS" class="mr-2">CSS</label>
+      </div>
+
+      <!-- Question 10 -->
+      <div>
+        <p class="text-xl font-semibold mb-2">10. Fill in: SQL stands for _____.</p>
+        <input type="text" name="q10" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+      </div>
+
+      <button type="button" onclick="calculateScore()" class="bg-blue-600 px-6 py-2 rounded text-white hover:bg-blue-700">Submit</button>
+    </form>
+
+    <!-- Result -->
+    <div id="result" class="mt-8 text-2xl font-bold"></div>
+    <div id="answers" class="mt-6 space-y-4 text-lg"></div>
+  </div>
+
+  <script>
+    function calculateScore() {
+      let score = 0;
+      let answersHTML = "";
+      
+      const answers = {
+        q1: "Delhi",
+        q2: ["Python", "Java"],
+        q3: ["dollar", "usd"],
+        q4: "Hyper Text Markup Language",
+        q5: ["React", "Angular", "Vue"],
+        q6: "Interactivity",
+        q7: ["cascading style sheets"],
+        q8: ["MongoDB", "Cassandra"],
+        q9: "Python",
+        q10: ["structured query language"]
+      };
+
+      // Question 1
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      if (q1 === answers.q1) score++;
+      answersHTML += `1. Capital of India: <span class="${q1 === answers.q1 ? 'correct-answer' : 'wrong-answer'}">${answers.q1}</span><br>`;
+
+      // Question 2
+      const selectedQ2 = Array.from(document.querySelectorAll('input[name="q2"]:checked')).map(cb => cb.value);
+      if (selectedQ2.length === answers.q2.length && selectedQ2.every(val => answers.q2.includes(val))) score++;
+      answersHTML += `2. Programming Languages: <span class="${selectedQ2.every(val => answers.q2.includes(val)) ? 'correct-answer' : 'wrong-answer'}">${answers.q2.join(", ")}</span><br>`;
+
+      // Question 3
+      const q3 = document.querySelector('input[name="q3"]').value.trim().toLowerCase();
+      if (answers.q3.includes(q3)) score++;
+      answersHTML += `3. Currency of USA: <span class="${answers.q3.includes(q3) ? 'correct-answer' : 'wrong-answer'}">Dollar</span><br>`;
+
+      // Question 4
+      const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+      if (q4 === answers.q4) score++;
+      answersHTML += `4. HTML stands for: <span class="${q4 === answers.q4 ? 'correct-answer' : 'wrong-answer'}">${answers.q4}</span><br>`;
+
+      // Question 5
+      const selectedQ5 = Array.from(document.querySelectorAll('input[name="q5"]:checked')).map(cb => cb.value);
+      if (selectedQ5.length === answers.q5.length && selectedQ5.every(val => answers.q5.includes(val))) score++;
+      answersHTML += `5. Frontend Frameworks: <span class="${selectedQ5.every(val => answers.q5.includes(val)) ? 'correct-answer' : 'wrong-answer'}">${answers.q5.join(", ")}</span><br>`;
+
+      // Question 6
+      const q6 = document.querySelector('input[name="q6"]:checked')?.value;
+      if (q6 === answers.q6) score++;
+      answersHTML += `6. JavaScript is used for: <span class="${q6 === answers.q6 ? 'correct-answer' : 'wrong-answer'}">${answers.q6}</span><br>`;
+
+      // Question 7
+      const q7 = document.querySelector('input[name="q7"]').value.trim().toLowerCase();
+      if (answers.q7.includes(q7)) score++;
+      answersHTML += `7. CSS stands for: <span class="${answers.q7.includes(q7) ? 'correct-answer' : 'wrong-answer'}">Cascading Style Sheets</span><br>`;
+
+      // Question 8
+      const selectedQ8 = Array.from(document.querySelectorAll('input[name="q8"]:checked')).map(cb => cb.value);
+      if (selectedQ8.length === answers.q8.length && selectedQ8.every(val => answers.q8.includes(val))) score++;
+      answersHTML += `8. NoSQL Databases: <span class="${selectedQ8.every(val => answers.q8.includes(val)) ? 'correct-answer' : 'wrong-answer'}">${answers.q8.join(", ")}</span><br>`;
+
+      // Question 9
+      const q9 = document.querySelector('input[name="q9"]:checked')?.value;
+      if (q9 === answers.q9) score++;
+      answersHTML += `9. Backend Language: <span class="${q9 === answers.q9 ? 'correct-answer' : 'wrong-answer'}">${answers.q9}</span><br>`;
+
+      // Question 10
+      const q10 = document.querySelector('input[name="q10"]').value.trim().toLowerCase();
+      if (answers.q10.includes(q10)) score++;
+      answersHTML += `10. SQL stands for: <span class="${answers.q10.includes(q10) ? 'correct-answer' : 'wrong-answer'}">Structured Query Language</span><br>`;
+
+      document.getElementById("result").textContent = `Your Score: ${score}/10`;
+      document.getElementById("answers").innerHTML = answersHTML;
+    }
+  </script>
+</body>
+</html>
